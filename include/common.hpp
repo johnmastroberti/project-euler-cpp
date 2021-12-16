@@ -16,16 +16,23 @@ namespace views = std::views;
 
 using u64 = uint64_t;
 
-auto accumulate(auto&& range, auto init) {
-  for (auto x : range) {
-    init += x;
-  }
-  return init;
-}
+template <typename Binop, typename Range, typename Init>
+concept AccumulateBinaryOp = requires(Binop&& binop, Init init) {
+  { binop(init, ranges::range_value_t<Range>{}) } -> std::convertible_to<Init>;
+};
 
-auto accumulate(auto&& range, auto init, auto&& binop) {
+template <ranges::range R, typename I, AccumulateBinaryOp<R, I> B>
+auto accumulate(R&& range, I init, B&& binop) {
   for (auto x : range) {
     init = binop(init, x);
   }
   return init;
+}
+
+auto accumulate(ranges::range auto&& range, auto init) {
+  return accumulate(range, init, std::plus{});
+}
+
+auto accumulate(ranges::range auto&& range) {
+  return accumulate(range, ranges::range_value_t<decltype(range)>{});
 }

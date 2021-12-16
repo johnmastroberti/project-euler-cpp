@@ -1,4 +1,3 @@
-#include "common.hpp"
 #include "problems.hpp"
 
-int main() { p5(); }
+int main() { p10(); }
