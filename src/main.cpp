@@ -1,4 +1,4 @@
 #include "common.hpp"
 #include "problems.hpp"
 
-int main() { p4(); }
+int main() { p5(); }

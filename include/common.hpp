@@ -18,8 +18,14 @@ using u64 = uint64_t;
 
 auto accumulate(auto&& range, auto init) {
   for (auto x : range) {
-    // spdlog::info("Processing x = {}", x);
     init += x;
+  }
+  return init;
+}
+
+auto accumulate(auto&& range, auto init, auto&& binop) {
+  for (auto x : range) {
+    init = binop(init, x);
   }
   return init;
 }

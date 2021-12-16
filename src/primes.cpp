@@ -159,7 +159,7 @@ auto divide_out(u64 num, u64 divisor) {
   return std::pair{num, count};
 }
 
-std::vector<u64> prime_divisors(u64 num) {
+std::vector<u64> unique_prime_divisors(u64 num) {
   std::vector<u64> divisors;
   Primes primes;
 
@@ -171,12 +171,19 @@ std::vector<u64> prime_divisors(u64 num) {
       num = new_num;
     }
   }
+  return divisors;
+}
 
-  // Make a primes class that generates prime numbers lazily
+std::vector<u64> prime_divisors(u64 num) {
+  std::vector<u64> divisors;
+  Primes primes;
 
-  // auto primes = primes_up_to(num);
-  // auto divisor_view =
-  //     primes | views::filter([num](auto p) { return num % p == 0; });
-  // ranges::copy(divisor_view, std::back_inserter(divisors));
+  while (num > 1) {
+    auto p = primes.next();
+    auto [new_num, count] = divide_out(num, p);
+    for ([[maybe_unused]] auto i : views::iota(0ull, count))
+      divisors.push_back(p);
+    num = new_num;
+  }
   return divisors;
 }
