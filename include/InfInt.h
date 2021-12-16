@@ -35,6 +35,8 @@
 #ifndef INFINT_H_
 #define INFINT_H_
 
+#include <fmt/format.h>
+
 #include <iostream>
 #include <vector>
 #include <sstream>
@@ -1352,5 +1354,14 @@ inline std::ostream& operator<<(std::ostream &s, const InfInt &n)
     }
     return s;
 }
+
+template <> struct fmt::formatter<InfInt>: formatter<std::string> {
+  // parse is inherited from formatter<string_view>.
+  template <typename FormatContext>
+  auto format(InfInt const& N, FormatContext& ctx) {
+    auto str = N.toString();
+    return formatter<std::string>::format(str, ctx);
+  }
+};
 
 #endif
