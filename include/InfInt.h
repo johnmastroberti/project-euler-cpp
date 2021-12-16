@@ -127,7 +127,6 @@ public:
     InfInt(unsigned int l);
     InfInt(unsigned long l);
     InfInt(unsigned long long l);
-    InfInt(const InfInt& l);
 
     /* assignment operators */
     const InfInt& operator=(const char* c);
@@ -138,7 +137,6 @@ public:
     const InfInt& operator=(unsigned int l);
     const InfInt& operator=(unsigned long l);
     const InfInt& operator=(unsigned long long l);
-    const InfInt& operator=(const InfInt& l);
 
     /* unary increment/decrement operators */
     const InfInt& operator++();
@@ -336,11 +334,6 @@ inline InfInt::InfInt(unsigned long long l) : pos(true)
     } while (l > 0);
 }
 
-inline InfInt::InfInt(const InfInt& l) : pos(l.pos), val(l.val)
-{
-    //PROFINY_SCOPE
-}
-
 inline const InfInt& InfInt::operator=(const char* c)
 {
     //PROFINY_SCOPE
@@ -469,14 +462,6 @@ inline const InfInt& InfInt::operator=(unsigned long long l)
         val.push_back((ELEM_TYPE) (l % BASE));
         l = l / BASE;
     } while (l > 0);
-    return *this;
-}
-
-inline const InfInt& InfInt::operator=(const InfInt& l)
-{
-    //PROFINY_SCOPE
-    pos = l.pos;
-    val = l.val;
     return *this;
 }
 
@@ -673,9 +658,9 @@ inline InfInt InfInt::operator*(const InfInt& rhs) const
             PRODUCT_TYPE pval = result.val[digit] + val[i] * (PRODUCT_TYPE) rhs.val[digit - i];
             if (pval >= BASE || pval <= -BASE)
             {
-                lldiv_t dt = my_lldiv(pval, BASE);
-                carry += dt.quot;
-                pval = dt.rem;
+                lldiv_t dt2 = my_lldiv(pval, BASE);
+                carry += dt2.quot;
+                pval = dt2.rem;
             }
             result.val[digit] = (ELEM_TYPE) pval;
             found = true;
@@ -990,7 +975,7 @@ inline char InfInt::digitAt(size_t i) const
         return -1;
 #endif
     }
-    return (val[i / DIGIT_COUNT] / powersOfTen[i % DIGIT_COUNT]) % 10;
+    return static_cast<char>((val[i / DIGIT_COUNT] / powersOfTen[i % DIGIT_COUNT]) % 10);
 }
 
 inline size_t InfInt::numberOfDigits() const

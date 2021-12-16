@@ -1,21 +1,7 @@
-#include <fstream>
 #include <iterator>
 
 #include "common.hpp"
-
-std::vector<int> get_data(const char* filename, int N) {
-  std::ifstream datafile(filename);
-  if (!datafile.good()) {
-    spdlog::error("Could not open {} for reading");
-    return {};
-  }
-
-  std::vector<int> data;
-  data.reserve(N);
-  std::copy_n(std::istream_iterator<int>(datafile), N,
-              std::back_inserter(data));
-  return data;
-}
+#include "data.hpp"
 
 auto max_sliding_product(auto row) {
   auto slide_views = row | rv3::views::sliding(4);
@@ -33,7 +19,7 @@ auto max_product(auto rows) {
 }
 
 void p11() {
-  auto grid = get_data("data/p11.txt", 400);
+  auto grid = get_data<int>("data/p11.txt", 400);
 
   auto rows = grid | rv3::views::chunk(20);
   auto horizontal_max = max_product(rows);

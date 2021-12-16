@@ -19,6 +19,8 @@ namespace views = ranges::views;
 
 using u64 = uint64_t;
 
+void print(auto&& x) { fmt::print("{}\n", x); }
+
 template <typename Binop, typename Range, typename Init>
 concept AccumulateBinaryOp = requires(Binop&& binop, Init init) {
   { binop(init, ranges::range_value_t<Range>{}) } -> std::convertible_to<Init>;
