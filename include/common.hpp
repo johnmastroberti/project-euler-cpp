@@ -8,11 +8,14 @@
 #include <cassert>
 #include <cmath>
 #include <numeric>
+#include <range/v3/all.hpp>
 #include <ranges>
 #include <vector>
 
-namespace ranges = std::ranges;
-namespace views = std::views;
+namespace rv3 = ranges;
+// namespace ranges = std::ranges;
+// namespace views = std::views;
+namespace views = ranges::views;
 
 using u64 = uint64_t;
 

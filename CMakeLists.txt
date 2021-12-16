@@ -14,6 +14,7 @@ add_custom_target("cleanall"
 # 3rd party libraries
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
+find_package(range-v3 REQUIRED)
 
 # Source files
 include_directories(${PROJECT_SOURCE_DIR}/include)
@@ -58,4 +59,4 @@ SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Define the executable and libraries to be linked
 add_executable(euler ${sources} ${headers})
-target_link_libraries(euler fmt::fmt spdlog::spdlog)
+target_link_libraries(euler fmt::fmt spdlog::spdlog range-v3::range-v3)
