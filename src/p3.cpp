@@ -1,6 +1,5 @@
 #include "common.hpp"
 #include "primes.hpp"
-#include "problems.hpp"
 
 void p3() {
   auto divisors = unique_prime_divisors(600851475143ull);

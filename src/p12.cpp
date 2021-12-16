@@ -1,6 +1,5 @@
 #include "common.hpp"
 #include "primes.hpp"
-#include "problems.hpp"
 
 auto triangle_n(u64 n) {
   if (n % 2 == 0)

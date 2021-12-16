@@ -1,6 +1,5 @@
 #include "common.hpp"
 #include "primes.hpp"
-#include "problems.hpp"
 
 void p10() {
   Primes<u64> primes;

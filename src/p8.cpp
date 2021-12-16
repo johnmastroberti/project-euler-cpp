@@ -1,5 +1,4 @@
 #include "common.hpp"
-#include "problems.hpp"
 #include "string.hpp"
 
 const char* digits = /*{{{*/

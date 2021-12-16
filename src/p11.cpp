@@ -2,7 +2,6 @@
 #include <iterator>
 
 #include "common.hpp"
-#include "problems.hpp"
 
 std::vector<int> get_data(const char* filename, int N) {
   std::ifstream datafile(filename);

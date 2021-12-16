@@ -1,7 +1,6 @@
 #include <string>
 
 #include "common.hpp"
-#include "problems.hpp"
 
 bool is_palindrome(u64 num) {
   auto numstring = std::to_string(num);

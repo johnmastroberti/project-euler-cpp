@@ -1,5 +1,4 @@
 #include "common.hpp"
-#include "problems.hpp"
 
 bool is_pythagorean_triplet(u64 a, u64 b, u64 c) {
   return a * a + b * b == c * c;

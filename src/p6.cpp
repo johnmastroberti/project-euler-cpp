@@ -1,5 +1,4 @@
 #include "common.hpp"
-#include "problems.hpp"
 
 auto square(u64 x) { return x * x; }
 

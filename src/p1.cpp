@@ -1,5 +1,4 @@
 #include "common.hpp"
-#include "problems.hpp"
 
 void p1() {
   auto nums = views::iota(0) | views::take(1000) |
