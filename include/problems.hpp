@@ -13,3 +13,5 @@ void p10();
 void p11();
 void p12();
 void p13();
+void p14();
+void p15();
