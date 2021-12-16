@@ -134,15 +134,14 @@ std::vector<u64> unique_prime_divisors(u64 num) {
   return divisors;
 }
 
-std::vector<u64> prime_divisors(u64 num) {
-  std::vector<u64> divisors;
+std::map<u64, u64> prime_divisors(u64 num) {
+  std::map<u64, u64> divisors;
   Primes<u64> primes;
 
   while (num > 1) {
     auto p = primes.next();
     auto [new_num, count] = divide_out(num, p);
-    for ([[maybe_unused]] auto i : views::iota(0ull, count))
-      divisors.push_back(p);
+    if (count != 0) divisors.insert({p, count});
     num = new_num;
   }
   return divisors;
