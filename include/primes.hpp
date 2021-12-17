@@ -13,11 +13,16 @@ template <typename IntT>
 class Primes {
  private:
   std::vector<IntT> m_prime_list;
+  u64 m_index;
 
  public:
-  Primes() : m_prime_list() {}
+  Primes() : m_prime_list(), m_index(0) {}
+
+  void reset() { m_index = 0; }
 
   IntT next() {
+    if (m_index < m_prime_list.size()) return m_prime_list[m_index++];
+
     // base cases
     if (m_prime_list.size() == 0) {
       m_prime_list.push_back(2);

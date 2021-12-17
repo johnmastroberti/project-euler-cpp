@@ -136,7 +136,8 @@ std::vector<u64> unique_prime_divisors(u64 num) {
 
 std::map<u64, u64> prime_divisors(u64 num) {
   std::map<u64, u64> divisors;
-  Primes<u64> primes;
+  static Primes<u64> primes;
+  primes.reset();
 
   while (num > 1) {
     auto p = primes.next();
