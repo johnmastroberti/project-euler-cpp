@@ -18,3 +18,5 @@ void p15();
 void p16();
 void p17();
 void p18();
+void p19();
+void p20();
