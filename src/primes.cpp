@@ -147,3 +147,22 @@ std::map<u64, u64> prime_divisors(u64 num) {
   }
   return divisors;
 }
+
+u64 factor_sum_impl(std::pair<u64, u64> prime_factor) {
+  auto [p, n] = prime_factor;
+  u64 total = 1;
+  u64 factor = 1;
+  for (u64 i = 1; i <= n; i++) {
+    factor *= p;
+    total += factor;
+  }
+
+  return total;
+}
+
+u64 sum_of_factors(u64 n) {
+  auto primes = prime_divisors(n);
+  auto sum = accumulate(primes | std::views::transform(factor_sum_impl), 1ull,
+                        std::multiplies());
+  return sum - n;
+}

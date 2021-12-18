@@ -8,6 +8,7 @@ std::vector<u64> first_n_primes(u64 n);
 std::vector<u64> primes_up_to(u64 n);
 std::vector<u64> unique_prime_divisors(u64 num);
 std::map<u64, u64> prime_divisors(u64 num);
+u64 sum_of_factors(u64 n);  // proper divisors only
 
 template <typename IntT>
 class Primes {

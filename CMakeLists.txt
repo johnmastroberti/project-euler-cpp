@@ -39,6 +39,7 @@ SET(WARNING_FLAGS
   -Wformat=2 \
   -Wmissing-format-attribute \
   -Wformat-nonliteral \
+  -Wno-float-conversion \
   -Werror"
 )
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${WARNING_FLAGS} -fconcepts-diagnostics-depth=3")
