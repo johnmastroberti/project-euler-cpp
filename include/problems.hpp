@@ -23,3 +23,6 @@ void p20();
 void p21();
 void p22();
 void p23();
+void p24();
+void p25();
+void p26();

@@ -1,3 +1,3 @@
 #include "problems.hpp"
 
-int main() { p23(); }
+int main() { p26(); }
