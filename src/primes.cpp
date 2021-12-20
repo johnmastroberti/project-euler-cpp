@@ -43,21 +43,7 @@ class PossiblePrime { /*{{{*/
 
   operator u64() const { return value(); }
 };
-
-bool is_prime(u64 num) {
-  // basic checks
-  if (num < 2) return false;
-  if (num % 2 == 0) return (num == 2);
-  if (num % 5 == 0) return (num == 5);
-
-  // Check divisibility by possible divisors
-  auto root = static_cast<u64>(std::sqrt(num));
-  auto possible_divisors =
-      views::iota(PossiblePrime()) |
-      views::take_while([root](auto p) { return p < root; });
-  return ranges::none_of(possible_divisors,
-                         [num](auto d) { return num % d == 0; });
-} /*}}}*/
+/*}}}*/
 
 std::vector<u64> first_n_primes(u64 n) { /*{{{*/
   // degenerate cases
@@ -121,7 +107,8 @@ auto divide_out(u64 num, u64 divisor) {
 
 std::vector<u64> unique_prime_divisors(u64 num) {
   std::vector<u64> divisors;
-  Primes<u64> primes;
+  static Primes<u64> primes;
+  primes.reset();
 
   while (num > 1) {
     auto p = primes.next();
@@ -165,4 +152,13 @@ u64 sum_of_factors(u64 n) {
   auto sum = accumulate(primes | std::views::transform(factor_sum_impl), 1ull,
                         std::multiplies());
   return sum - n;
+}
+
+bool is_prime(u64 n) {
+  static Primes<u64> primes;
+  primes.reset();
+  primes.next();
+  for (u64 d = 2; d * d <= n; d = primes.next())
+    if (n % d == 0) return false;
+  return true;
 }
