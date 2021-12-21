@@ -29,3 +29,5 @@ void p26();
 void p27();
 void p28();
 void p29();
+void p30();
+void p31();
