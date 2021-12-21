@@ -27,3 +27,5 @@ void p24();
 void p25();
 void p26();
 void p27();
+void p28();
+void p29();
