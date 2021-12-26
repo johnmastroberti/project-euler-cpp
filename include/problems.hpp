@@ -51,3 +51,5 @@ void p48();
 void p49();
 void p50();
 void p51();
+void p52();
+void p53();
