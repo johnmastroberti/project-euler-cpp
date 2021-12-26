@@ -1,8 +1,7 @@
-#include <iostream>
 #include <span>
 
 #include "common.hpp"
-#include "primes.hpp"
+#include "primes2.hpp"
 
 char common_3_digits(const std::string& p) {
   auto has_3_of = [&p](char c) { return std::ranges::count(p, c) == 3; };
@@ -13,9 +12,8 @@ char common_3_digits(const std::string& p) {
     return *it;
 }
 
-bool has_prop_p51(std::string p) {
+bool has_prop_p51_impl(std::string p) {
   auto d = common_3_digits(p);
-  if (p == "56003") spdlog::info("For 56003, d = '{}'", d);
   if (d == '\0') return false;
 
   auto it1 = std::ranges::find(p, d);
@@ -33,14 +31,8 @@ bool has_prop_p51(std::string p) {
   return count == 8;
 }
 
-void p51() {
-  Primes<u64> primes;
+bool has_prop_p51(u64 n) { return has_prop_p51_impl(std::to_string(n)); }
 
-  for (;;) {
-    auto p = primes.next();
-    if (has_prop_p51(std::to_string(p))) {
-      print_answer(51, p);
-      return;
-    }
-  }
+void p51() {
+  print_answer(51, *std::ranges::find_if(primes<u64>, has_prop_p51));
 }
