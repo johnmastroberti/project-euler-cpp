@@ -49,3 +49,5 @@ void p46();
 void p47();
 void p48();
 void p49();
+void p50();
+void p51();
