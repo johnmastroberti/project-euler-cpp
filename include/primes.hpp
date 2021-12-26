@@ -15,6 +15,11 @@ class Primes {
  private:
   std::vector<IntT> m_prime_list;
   u64 m_index;
+  IntT insert_prime(IntT p) {
+    m_prime_list.push_back(p);
+    m_index++;
+    return p;
+  }
 
  public:
   Primes() : m_prime_list(), m_index(0) {}
@@ -25,23 +30,17 @@ class Primes {
     if (m_index < m_prime_list.size()) return m_prime_list[m_index++];
 
     // base cases
-    if (m_prime_list.size() == 0) {
-      m_prime_list.push_back(2);
-      return 2;
-    } else if (m_prime_list.size() == 1) {
-      m_prime_list.push_back(3);
-      return 3;
-    }
+    if (m_prime_list.size() == 0)
+      return insert_prime(2);
+    else if (m_prime_list.size() == 1)
+      return insert_prime(3);
 
     auto p = m_prime_list.back() + 2;
     for (;; p += 2) {
       auto p_is_prime = ranges::none_of(
           m_prime_list | views::take_while([p](auto x) { return x * x <= p; }),
           [p](auto x) { return p % x == 0; });
-      if (p_is_prime) {
-        m_prime_list.push_back(p);
-        return p;
-      }
+      if (p_is_prime) return insert_prime(p);
     }
   }
 

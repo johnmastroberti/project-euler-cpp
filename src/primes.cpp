@@ -155,6 +155,7 @@ u64 sum_of_factors(u64 n) {
 }
 
 bool is_prime(u64 n) {
+  if (n == 1) return false;
   static Primes<u64> primes;
   primes.reset();
   primes.next();
