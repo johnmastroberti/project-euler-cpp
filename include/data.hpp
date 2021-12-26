@@ -4,7 +4,7 @@
 #include "common.hpp"
 
 template <typename T>
-auto get_data(const char* filename, int N) {
+auto get_data(const char* filename, int N = 0) {
   std::vector<T> data;
 
   std::ifstream datafile(filename);
@@ -13,7 +13,13 @@ auto get_data(const char* filename, int N) {
     return data;
   }
 
-  data.reserve(N);
-  std::copy_n(std::istream_iterator<T>(datafile), N, std::back_inserter(data));
+  if (N > 0) {
+    data.reserve(N);
+    std::copy_n(std::istream_iterator<T>(datafile), N,
+                std::back_inserter(data));
+  } else {
+    std::copy(std::istream_iterator<T>(datafile), std::istream_iterator<T>(),
+              std::back_inserter(data));
+  }
   return data;
 }
