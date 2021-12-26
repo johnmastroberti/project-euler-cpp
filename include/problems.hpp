@@ -44,3 +44,8 @@ void p41();
 void p42();
 void p43();
 void p44();
+void p45();
+void p46();
+void p47();
+void p48();
+void p49();

@@ -1,14 +1,5 @@
 #include "common.hpp"
-
-u64 pentagonal_n(u64 n) { return n * (3 * n - 1) / 2; }
-
-bool is_pentagonal(u64 p) {
-  p *= 2;
-  u64 nmax = std::sqrt(p);
-  for (auto n : std::views::iota(1ull, nmax + 1))
-    if (p == n * (3 * n - 1)) return true;
-  return false;
-}
+#include "shape_numbers.hpp"
 
 bool sum_and_diff_pentagonal(u64 j, u64 k) {
   auto pj = pentagonal_n(j);
