@@ -1355,6 +1355,16 @@ inline std::ostream& operator<<(std::ostream &s, const InfInt &n)
     return s;
 }
 
+template <> struct fmt::formatter<InfInt>: formatter<std::string> {
+  // parse is inherited from formatter<string_view>.
+  template <typename FormatContext>
+  auto format(InfInt const& N, FormatContext& ctx) {
+    auto str = N.toString();
+    return formatter<std::string>::format(str, ctx);
+  }
+};
+
+
 inline auto gcd(InfInt a, InfInt b) {
   while (b != 0) {
     auto t = b;
@@ -1364,13 +1374,5 @@ inline auto gcd(InfInt a, InfInt b) {
   return a;
 }
 
-template <> struct fmt::formatter<InfInt>: formatter<std::string> {
-  // parse is inherited from formatter<string_view>.
-  template <typename FormatContext>
-  auto format(InfInt const& N, FormatContext& ctx) {
-    auto str = N.toString();
-    return formatter<std::string>::format(str, ctx);
-  }
-};
 
 #endif

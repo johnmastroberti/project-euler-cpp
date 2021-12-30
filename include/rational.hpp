@@ -67,6 +67,14 @@ struct Rational { /*{{{*/
   }
 }; /*}}}*/
 
+template <typename T>
+struct fmt::formatter<Rational<T>> : fmt::formatter<T> {
+  template <typename FormatContext>
+  auto format(const Rational<T>& r, FormatContext& ctx) -> decltype(ctx.out()) {
+    return format_to(ctx.out(), "{}/{}", r.num, r.den);
+  }
+};
+
 // Constexpr, noexcept enabled version for builtin integral types
 // template <std::integral T>
 // struct Rational { [>{{{<]
