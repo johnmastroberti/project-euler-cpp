@@ -55,3 +55,5 @@ void p52();
 void p53();
 void p54();
 void p55();
+void p56();
+void p57();
