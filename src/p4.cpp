@@ -1,13 +1,7 @@
 #include <string>
 
 #include "common.hpp"
-
-bool is_palindrome(u64 num) {
-  auto numstring = std::to_string(num);
-
-  return std::equal(numstring.begin(), numstring.end(), numstring.rbegin(),
-                    numstring.rend());
-}
+#include "numprops.hpp"
 
 void p4() {
   std::vector<u64> nums;
@@ -16,7 +10,7 @@ void p4() {
   for (u64 i = 900; i < bound; i++)
     for (u64 j = i; j < bound; j++) nums.push_back(i * j);
 
-  auto palindromes = nums | views::filter(is_palindrome);
+  auto palindromes = nums | views::filter(is_palindrome());
   auto max = ranges::max_element(palindromes);
   if (max != palindromes.end())
     spdlog::info("Problem 4: {}", *max);
