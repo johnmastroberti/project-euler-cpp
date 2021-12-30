@@ -100,7 +100,7 @@ struct PokerHand {
   Rank test_straight_flushes() const {
     auto is_straight =
         ranges::adjacent_find(cards, [](Card const& c1, Card const& c2) {
-          return c1.value + 1 != c2.value;
+          return c1.value - 1 != c2.value;
         }) == cards.end();
     auto is_flush = ranges::all_of(
         cards,
@@ -124,12 +124,13 @@ struct PokerHand {
     // Does 4, 3 of kind, pairs, and full house
     // four and three of a kind
     auto midval = cards[2].value;
-    auto end_non_mid = midval ? cards[4].value : cards[0].value;
+    auto end_non_mid =
+        midval == cards[0].value ? cards[4].value : cards[0].value;
     auto pred43 = [val = midval](Card const& c) { return c.value == val; };
     auto n_of_kind = std::ranges::count_if(cards, pred43);
     std::array<int, 5> backs = {0, 0, 0, 0, 0};
-    auto copy_not_equal = [&backs, this](int value) {
-      std::ranges::copy_if(get_card_values(), backs.begin(),
+    auto copy_not_equal = [&backs, this](int value, int offset) {
+      std::ranges::copy_if(get_card_values(), backs.begin() + offset,
                            [value](int v) { return v != value; });
     };
     if (n_of_kind == 4) {
@@ -138,12 +139,12 @@ struct PokerHand {
     }
     if (n_of_kind == 3) {
       // Check for full house
-      if (cards[0].value == cards[1].value || cards[3].value == cards[4].value)
+      if (cards[0].value == cards[1].value && cards[3].value == cards[4].value)
         return {.rank = Rank::full_house,
                 .backups = {midval, end_non_mid, 0, 0, 0}};
       else {  // not a full house, just 3 of a kind
         backs[0] = midval;
-        copy_not_equal(midval);
+        copy_not_equal(midval, 1);
         return {.rank = Rank::three_of_kind, .backups = backs};
       }
     }
@@ -156,7 +157,7 @@ struct PokerHand {
                                          [](auto const& c) { return c.value; });
     if (p2 == cards.end()) {  // one pair
       backs[0] = p1->value;
-      copy_not_equal(p1->value);
+      copy_not_equal(p1->value, 1);
       return {.rank = Rank::one_pair, .backups = backs};
     } else {
       backs[0] = p1->value;
@@ -218,22 +219,15 @@ const char* rank_to_str(int rank) {
 }
 
 void p54() {
-  auto hands = get_data<PokerHand>("data/p54test.txt", 10);
-  for (auto cview : hands | rv3::views::chunk(2)) {
-    auto h1it = cview.begin();
-    auto h2it = h1it + 1;
-    auto h1r = h1it->rank();
-    auto h2r = h2it->rank();
-    print("New hand");
-    fmt::print("\tPlayer 1: Hand = {}, Rank = {}, backups = {}\n", h1it->cards,
-               rank_to_str(h1r.rank), h1r.backups);
-    fmt::print("\tPlayer 2: Hand = {}, Rank = {}, backups = {}\n", h2it->cards,
-               rank_to_str(h2r.rank), h2r.backups);
-    fmt::print("\tWinner: Player {}\n", h1r > h2r ? '1' : '2');
-  }
-
-  //     rv3::count_if(hands | rv3::views::chunk(2), [](auto const& cview) {
-  //       return cview.begin()->rank() > (++cview.begin())->rank();
-  //     });
-  // print_answer(54, result);
+  auto hands = get_data<PokerHand>("data/p54.txt", 2000);
+  auto result =
+      rv3::count_if(hands | rv3::views::chunk(2), [](auto const& cview) {
+        return cview.begin()->rank() > (++cview.begin())->rank();
+      });
+  auto ties =
+      rv3::count_if(hands | rv3::views::chunk(2), [](auto const& cview) {
+        return cview.begin()->rank() == (++cview.begin())->rank();
+      });
+  fmt::print("Number of ties: {}\n", ties);
+  print_answer(54, result);
 }
