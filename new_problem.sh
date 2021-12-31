@@ -10,4 +10,4 @@ echo "void p${NEW_NUMBER}();" >> $PLIST
 sed -i "s/$CURRENT_NUMBER/$NEW_NUMBER/" src/main.cpp
 cp src/stub.cpp $NEW_FILE
 echo -e "\nvoid p${NEW_NUMBER}() {\n\n}" >> $NEW_FILE
-cmake .
+cmake -S . -B build
