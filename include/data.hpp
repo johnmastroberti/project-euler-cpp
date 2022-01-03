@@ -4,7 +4,7 @@
 #include "common.hpp"
 
 template <typename T>
-auto get_data(const char* filename, int N = 0) {
+auto get_data(const char* filename, size_t N = 0) {
   std::vector<T> data;
 
   std::ifstream datafile(filename);
@@ -12,6 +12,9 @@ auto get_data(const char* filename, int N = 0) {
     spdlog::error("Could not open {} for reading");
     return data;
   }
+
+  if constexpr (std::is_same_v<T, char> || std::is_same_v<T, unsigned char>)
+    datafile >> std::noskipws;
 
   if (N > 0) {
     data.reserve(N);
