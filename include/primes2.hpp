@@ -94,6 +94,12 @@ class Primes {
 
   auto begin() const { return Iterator(); }
   auto end() const { return std::unreachable_sentinel_t{}; }
+
+  auto operator[](std::size_t ix) {
+    auto it = begin();
+    it += ix;
+    return *it;
+  }
 };
 
 template <std::integral IntT>
