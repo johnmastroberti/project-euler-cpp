@@ -16,6 +16,8 @@ namespace rv3 = ranges;
 // namespace ranges = std::ranges;
 // namespace views = std::views;
 namespace views = ranges::views;
+namespace stdr = std::ranges;
+namespace stdv = std::views;
 
 using u64 = uint64_t;
 
